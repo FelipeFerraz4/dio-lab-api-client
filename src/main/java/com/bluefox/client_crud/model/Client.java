@@ -24,5 +24,10 @@ public class Client {
 
     public Address getClientAddress() {
         return clientAddress;
+    }
+
+    public void setClientAddress(Address clientAddress) {
+        this.clientAddress = clientAddress;
     }    
+    
 }

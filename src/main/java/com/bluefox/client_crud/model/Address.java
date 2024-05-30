@@ -8,10 +8,11 @@ public class Address {
     
     @Id
     private String cep;
-    private String street;
-    private String district;
-    private String city;
-    private String state;
+    private String logradouro;
+    private String complemento;
+    private String bairro;
+    private String localidade;
+    private String uf;
     private String ibge;
     private String gia;
     private String ddd;
@@ -20,17 +21,20 @@ public class Address {
     public String getCep() {
         return cep;
     }
-    public String getStreet() {
-        return street;
+    public String getLogradouro() {
+        return logradouro;
     }
-    public String getDistrict() {
-        return district;
+    public String getComplemento() {
+        return complemento;
     }
-    public String getCity() {
-        return city;
+    public String getBairro() {
+        return bairro;
     }
-    public String getState() {
-        return state;
+    public String getLocalidade() {
+        return localidade;
+    }
+    public String getUf() {
+        return uf;
     }
     public String getIbge() {
         return ibge;
@@ -44,6 +48,6 @@ public class Address {
     public String getSiafi() {
         return siafi;
     }
-
+    
     
 }
