@@ -26,13 +26,13 @@ public class ClientServiceImplementation implements ClientService {
     private ViaCepService viaCepService;
 
     private void saveClientwithCep(Client client) {
-        String cep = client.getClientAddress().getCep();
+        String cep = client.getAddress().getCep();
         Address address = addressRepository.findById(cep).orElseGet(() -> {
             Address newAddress = viaCepService.searchCep(cep);
             addressRepository.save(newAddress);
             return newAddress;
         });
-        client.setClientAddress(address);
+        client.setAddress(address);
         clientRepository.save(client);
     }
 
@@ -44,7 +44,7 @@ public class ClientServiceImplementation implements ClientService {
     @Override
     public Client searchById(Long clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
-        return client.get();
+        return client.orElse(null);
     }
 
     @Override
@@ -54,9 +54,10 @@ public class ClientServiceImplementation implements ClientService {
     }
 
     @Override
-    public void upadte(Long clientId, Client client) {
+    public void update(Long clientId, Client client) {
         Optional<Client> clientDB = clientRepository.findById(clientId);
         if (clientDB.isPresent()) {
+            client.setId(clientId);
             saveClientwithCep(client);
         }
     }
@@ -65,5 +66,4 @@ public class ClientServiceImplementation implements ClientService {
     public void delete(Long clientId) {
         clientRepository.deleteById(clientId);
     }
-
 }

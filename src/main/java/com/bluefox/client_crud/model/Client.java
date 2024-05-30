@@ -5,31 +5,64 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import java.util.Objects;
 
 @Entity
 public class Client {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long clientId;
-    private String clientName;
+    private Long id;
+    
+    private String name;
+    
     @ManyToOne
-    private Address clientAddress;
+    private Address address;
     
-    public Long getClientId() {
-        return clientId;
-    }
-    
-    public String getClientName() {
-        return clientName;
+    // Construtor sem argumentos
+    public Client() {
     }
 
-    public Address getClientAddress() {
-        return clientAddress;
+    // Construtor com todos os argumentos
+    public Client(String name, Address address) {
+        this.name = name;
+        this.address = address;
+    }
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public String getName() {
+        return name;
     }
 
-    public void setClientAddress(Address clientAddress) {
-        this.clientAddress = clientAddress;
-    }    
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return Objects.equals(id, client.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -8,35 +8,27 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bluefox.client_crud.model.Client;
 import com.bluefox.client_crud.service.ClientService;
 
-// import io.swagger.v3.oas.annotations.Operation;
-// import io.swagger.v3.oas.annotations.responses.ApiResponse;
-// import io.swagger.v3.oas.annotations.responses.ApiResponses;
-// import io.swagger.v3.oas.annotations.tags.Tag;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
+import java.util.NoSuchElementException;
 
 /**
- * Constroller
- * 
+ * Controller for managing Client entities.
  */
-
 @RestController
-@RequestMapping("customers")
-// @RequestMapping(value = "/open-api", produces = {"aplications/json"})
-// @Tag(name = "open-api")
+@RequestMapping("/customers")
 public class ClientRestController {
+
     @Autowired 
     private ClientService clientService;
 
-    // @Operation(summary = "Retorna os clientes cadastrados", method = "GET")
-    // @ApiResponses(value = {
-        //     @ApiResponse(responseCode = "200", description = "retorno bem sucedido")
-        // })
     @GetMapping
     public ResponseEntity<Iterable<Client>> getSearchAll() {
         return ResponseEntity.ok(clientService.searchAll());
@@ -44,10 +36,14 @@ public class ClientRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Client> getSearchById(@PathVariable Long id) {
-        return ResponseEntity.ok(clientService.searchById(id));
+        try {
+            return ResponseEntity.ok(clientService.searchById(id));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Client> postInsertClient(@RequestBody Client client) {
         clientService.insert(client);
         return ResponseEntity.ok(client);
@@ -55,15 +51,27 @@ public class ClientRestController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Client> putUpdateClient(@PathVariable Long id, @RequestBody Client client) {
-        clientService.upadte(id, client);
-        return ResponseEntity.ok(client);
+        try {
+            clientService.update(id, client);
+            return ResponseEntity.ok(client);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
-        clientService.delete(id);
-        return ResponseEntity.ok().build();
-    }    
-    
-    
+        try {
+            clientService.delete(id);
+            return ResponseEntity.ok().build();
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    } 
+
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleNoSuchElementException() {
+        System.out.println("Not Find Element");
+    }
 }

@@ -17,8 +17,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 
 // @OpenAPIDefinition(info = @Info(title = "Client API", version = "1.0.0", description = "Api para gerenciar cadastros de clientes"))
-@EnableFeignClients
 @SpringBootApplication
+@EnableFeignClients
 public class ClientCrudApplication {
 
 	public static void main(String[] args) {
