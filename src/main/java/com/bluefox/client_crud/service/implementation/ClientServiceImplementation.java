@@ -3,6 +3,7 @@ package com.bluefox.client_crud.service.implementation;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bluefox.client_crud.model.Address;
 import com.bluefox.client_crud.model.Client;
@@ -14,6 +15,7 @@ import com.bluefox.client_crud.service.ViaCepService;
 /**
  * ClientServiceImplementation
  */
+@Service
 public class ClientServiceImplementation implements ClientService {
 
     @Autowired

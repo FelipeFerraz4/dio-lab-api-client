@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bluefox.client_crud.model.Client;
 import com.bluefox.client_crud.service.ClientService;
 
+// import io.swagger.v3.oas.annotations.Operation;
+// import io.swagger.v3.oas.annotations.responses.ApiResponse;
+// import io.swagger.v3.oas.annotations.responses.ApiResponses;
+// import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,15 +20,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
+/**
+ * Constroller
+ * 
+ */
 
 @RestController
 @RequestMapping("customers")
+// @RequestMapping(value = "/open-api", produces = {"aplications/json"})
+// @Tag(name = "open-api")
 public class ClientRestController {
-    @Autowired
+    @Autowired 
     private ClientService clientService;
 
+    // @Operation(summary = "Retorna os clientes cadastrados", method = "GET")
+    // @ApiResponses(value = {
+        //     @ApiResponse(responseCode = "200", description = "retorno bem sucedido")
+        // })
     @GetMapping
     public ResponseEntity<Iterable<Client>> getSearchAll() {
         return ResponseEntity.ok(clientService.searchAll());

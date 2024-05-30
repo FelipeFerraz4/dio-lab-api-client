@@ -17,7 +17,10 @@ public class Address {
     private String gia;
     private String ddd;
     private String siafi;
-    
+
+    public Address() {
+    }
+
     public String getCep() {
         return cep;
     }
