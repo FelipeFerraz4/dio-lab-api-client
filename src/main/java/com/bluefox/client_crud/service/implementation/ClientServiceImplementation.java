@@ -49,6 +49,7 @@ public class ClientServiceImplementation implements ClientService {
 
     @Override
     public void insert(Client client) {
+        System.out.println(client);
         saveClientwithCep(client);
     }
 
